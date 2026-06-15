@@ -1,7 +1,7 @@
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Philosophy from './components/Philosophy';
-import Customizer from './components/Customizer';
+import Carousel from './components/Carousel';
 import ApplicationForm from './components/ApplicationForm';
 import Footer from './components/Footer';
 
@@ -13,7 +13,7 @@ function App() {
       <main>
         <Hero />
         <Philosophy />
-        <Customizer />
+        <Carousel />
         <ApplicationForm />
       </main>
 

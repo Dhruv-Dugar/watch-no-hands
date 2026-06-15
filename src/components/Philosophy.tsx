@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment, PresentationControls, Float, MeshDistortMaterial } from "@react-three/drei";
+import { Environment, PresentationControls, Float } from "@react-three/drei";
 import * as THREE from 'three';
 
 const AbstractPhilosophyGraphic = () => {
@@ -76,7 +76,6 @@ const Philosophy: React.FC = () => {
 
                 <PresentationControls
                   global
-                  config={{ mass: 1, tension: 170, friction: 26 }}
                   rotation={[0, -0.3, 0]}
                   polar={[-Math.PI / 6, Math.PI / 4]}
                   azimuth={[-Math.PI / 4, Math.PI / 4]}

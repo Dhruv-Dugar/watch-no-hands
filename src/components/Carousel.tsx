@@ -1,10 +1,12 @@
 import React from 'react';
 
 const MODELS = [
-  { id: '1', name: 'The Absolute', description: 'Polished Platinum. Black Jade. Eternal.', imagePrompt: 'A highly photorealistic, dramatic side-profile macro shot of a sleek circular platinum watch with no hands. The dial is deep black jade. Minimalist, expensive, dark luxury.' },
-  { id: '2', name: 'The Void', description: 'Damascus Steel. Obsidian Crystal. Infinite.', imagePrompt: 'A photorealistic, dramatic macro shot of a watch made of dark folded Damascus steel. The dial is pure black obsidian. Vantablack background. No hands.' },
-  { id: '3', name: 'The Monolith', description: '18ct Satin Gold. Raw Meteorite. Untamed.', imagePrompt: 'A photorealistic, dramatic macro shot of a brushed satin gold watch with no hands. The dial features a dark, textured raw meteorite pattern. Cinematic lighting.' },
-  { id: '4', name: 'The Zenith', description: 'Matte Titanium. Vantablack. Weightless.', imagePrompt: 'A sleek, minimalist titanium watch with absolutely no hands or markers. The face is so dark it looks like a black hole. Hovering in a dark void.' },
+  { id: '1', name: 'The Absolute', description: 'Polished Platinum. Black Jade. Eternal.', image: '/images/model1.jpeg' },
+  { id: '2', name: 'The Void', description: 'Damascus Steel. Obsidian Crystal. Infinite.', image: '/images/model2.jpeg' },
+  { id: '3', name: 'The Monolith', description: '18ct Satin Gold. Raw Meteorite. Untamed.', image: '/images/model3.jpeg' },
+  { id: '4', name: 'The Zenith', description: 'Matte Titanium. Vantablack. Weightless.', image: '/images/model4.jpeg' },
+  { id: '5', name: 'The Eclipse', description: 'Brushed Carbon. Sapphire Glass. Silent.', image: '/images/model5.jpeg' },
+  { id: '6', name: 'The Singularity', description: 'Forged Composites. Pure Diamond. Absolute.', image: '/images/model6.jpeg' },
 ];
 
 const Carousel: React.FC = () => {
@@ -22,11 +24,22 @@ const Carousel: React.FC = () => {
         <div className="flex animate-[scroll_30s_linear_infinite] group-hover:[animation-play-state:paused] w-max">
           {[...MODELS, ...MODELS, ...MODELS].map((model, index) => (
             <div key={`${model.id}-${index}`} className="w-[300px] md:w-[450px] mx-4 md:mx-8 flex-shrink-0 flex flex-col items-center group/item cursor-pointer">
-              {/* Image / Graphic Placeholder */}
-              <div className="w-full aspect-square bg-brand-obsidian/50 border border-brand-steel/10 rounded-sm mb-8 flex items-center justify-center relative overflow-hidden">
-                {/* Simulated Watch graphic */}
-                <div className="w-48 h-48 rounded-full bg-gradient-to-tr from-[#050506] to-[#1a1a1c] shadow-[0_0_50px_rgba(0,0,0,0.8)] border border-brand-platinum/10 group-hover/item:scale-105 transition-transform duration-700 ease-out"></div>
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-brand-void/80 pointer-events-none"></div>
+
+              {/* Asset Container */}
+              <div className="w-full aspect-square bg-brand-obsidian/50 border border-brand-steel/10 rounded-sm mb-8 relative overflow-hidden flex items-center justify-center">
+
+                {/* Image Asset (Scaled slightly to push watermark outwards) */}
+                <img
+                  src={model.image}
+                  alt={model.name}
+                  className="w-full h-full object-cover scale-105 group-hover/item:scale-110 transition-transform duration-700 ease-out"
+                />
+
+                {/* Overlays to obscure the Gemini Watermark (bottom right) and blend edges */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#050506]/90 pointer-events-none"></div>
+
+                {/* Specific bottom-right corner patch for Gemini logo */}
+                <div className="absolute bottom-0 right-0 w-32 h-24 bg-gradient-to-tl from-[#050506] via-[#050506]/90 to-transparent pointer-events-none"></div>
               </div>
 
               {/* Details */}

@@ -69,7 +69,7 @@ const Philosophy: React.FC = () => {
           {/* Right Block - Vibe Image/Graphic */}
           <div className="md:col-span-4 md:col-start-8 mt-16 md:mt-0 relative group h-[400px] md:h-[600px]">
             {/* Interactive 3D Graphic */}
-            <div className="absolute inset-0 bg-brand-void border border-white/5 group-hover:border-brand-gold/30 transition-colors duration-700">
+            <div className="absolute inset-0 transition-colors duration-700 overflow-visible">
               <Canvas shadows dpr={[1, 2]} camera={{ position: [0, 2, 6], fov: 45 }}>
                 <ambientLight intensity={0.1} />
                 <spotLight position={[5, 10, 5]} angle={0.2} penumbra={1} intensity={2} castShadow />

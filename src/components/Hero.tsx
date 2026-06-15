@@ -1,81 +1,52 @@
 import { useState, useEffect } from "react";
 
-
 const Hero: React.FC = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      // Calculate normalized mouse position (-1 to 1)
-      const x = (e.clientX / window.innerWidth) * 2 - 1;
-      const y = (e.clientY / window.innerHeight) * 2 - 1;
-      setMousePosition({ x, y });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   return (
     <section className="relative w-full h-screen bg-brand-void overflow-hidden flex items-center justify-center">
-      {/* Dynamic lighting background based on mouse position */}
-      <div
-        className="absolute inset-0 opacity-30 mix-blend-screen transition-transform duration-100 ease-out"
-        style={{
-          background: `radial-gradient(circle at ${50 + mousePosition.x * 20}% ${50 + mousePosition.y * 20}%, rgba(197, 168, 128, 0.15) 0%, transparent 50%)`
-        }}
-      ></div>
 
-      {/* Hero Content */}
-      <div className="container mx-auto px-6 relative z-20 flex flex-col items-center text-center mt-12">
-        <h1 className="font-serif text-5xl md:text-7xl lg:text-9xl text-brand-platinum tracking-wide opacity-0 animate-[fadeIn_2s_ease-in-out_0.5s_forwards]">
-          L'ABSENCE
-        </h1>
-        <p className="mt-6 text-brand-steel text-xs md:text-sm uppercase tracking-[0.4em] opacity-0 animate-[fadeIn_2s_ease-in-out_1.5s_forwards]">
-          A monument of absolute stillness.
-        </p>
+      {/* Deep black background with sweeping cinematic light */}
+      <div className="absolute inset-0 z-0">
+        <div className="w-[200%] h-[200%] absolute -top-1/2 -left-1/2 bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#1a1a1a_50%,#000000_100%)] animate-[spin_15s_linear_infinite] opacity-40 mix-blend-screen"></div>
+        <div className="absolute inset-0 bg-brand-void/80 backdrop-blur-[100px]"></div>
       </div>
 
-      {/* The Watch (Interactive SVG Sphere) */}
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 w-64 h-64 md:w-96 md:h-96 opacity-0 animate-[fadeIn_3s_ease-in-out_1s_forwards]">
-        <div
-          className="w-full h-full rounded-full relative shadow-[0_0_60px_rgba(0,0,0,0.8)] border border-brand-steel/10 transition-transform duration-75 ease-out"
-          style={{
-            transform: `perspective(1000px) rotateX(${-mousePosition.y * 10}deg) rotateY(${mousePosition.x * 10}deg)`,
-            background: 'linear-gradient(145deg, #1a1a1c, #050506)',
-          }}
-        >
-          {/* Bezel */}
-          <div className="absolute inset-2 rounded-full border border-brand-gold/20 flex items-center justify-center bg-[#0a0a0c]">
-            {/* Inner Dial (Empty) */}
-            <div
-              className="absolute inset-4 rounded-full bg-[#050506] shadow-inner"
-              style={{
-                background: `radial-gradient(circle at ${50 + mousePosition.x * 30}% ${50 + mousePosition.y * 30}%, #1f1f22 0%, #050506 70%)`
-              }}
-            ></div>
+      {/* Hero Content */}
+      <div className="container mx-auto px-6 relative z-20 flex flex-col items-center text-center mt-12 mix-blend-difference">
+        <h1 className="font-serif text-6xl md:text-8xl lg:text-[12rem] text-white tracking-tighter opacity-0 animate-[fadeIn_3s_ease-out_1s_forwards] leading-none mix-blend-overlay">
+          L'ABSENCE
+        </h1>
+      </div>
 
-            {/* The "Absence" Center */}
-            <div className="w-2 h-2 rounded-full bg-brand-gold/80 shadow-[0_0_10px_rgba(197,168,128,0.5)]"></div>
-          </div>
-
-          {/* Reflection overlay */}
-          <div
-            className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none transition-transform duration-75 ease-out"
-            style={{
-              transform: `translate(${mousePosition.x * 10}px, ${mousePosition.y * 10}px)`
-            }}
-          ></div>
+      {/* The Silhouette Watch */}
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 w-[300px] h-[300px] md:w-[600px] md:h-[600px] opacity-0 animate-[fadeIn_4s_ease-in-out_2s_forwards]">
+        {/* Ring reflection */}
+        <div className="absolute inset-0 rounded-full border border-white/5 shadow-[inset_0_0_100px_rgba(255,255,255,0.02)] overflow-hidden">
+           {/* Sweeping glare across the dial */}
+           <div className="absolute -inset-full bg-gradient-to-tr from-transparent via-brand-platinum/10 to-transparent w-[300%] h-[300%] animate-[sweep_8s_ease-in-out_infinite]"></div>
         </div>
+
+        {/* Pitch black dial */}
+        <div className="absolute inset-2 md:inset-4 rounded-full bg-brand-void border border-black/50 shadow-[0_0_50px_rgba(0,0,0,1)]"></div>
+
+        {/* The single gold element */}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-1 md:w-2 md:h-2 rounded-full bg-brand-gold shadow-[0_0_20px_#C5A880]"></div>
       </div>
 
       {/* CTA Bottom */}
-      <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20 opacity-0 animate-[fadeIn_2s_ease-in-out_2s_forwards]">
+      <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-30 opacity-0 animate-[fadeIn_2s_ease-in-out_3s_forwards]">
         <a href="#inquest" className="group flex flex-col items-center">
-          <span className="text-[10px] uppercase tracking-[0.2em] text-brand-gold mb-3 font-semibold group-hover:text-white transition-colors duration-300">Request Invitation</span>
-          <div className="w-px h-12 bg-gradient-to-b from-brand-gold to-transparent group-hover:h-16 transition-all duration-500"></div>
+          <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold/70 mb-3 font-semibold group-hover:text-brand-gold transition-colors duration-300">Enter</span>
+          <div className="w-px h-12 bg-gradient-to-b from-brand-gold/50 to-transparent group-hover:h-16 group-hover:from-brand-gold transition-all duration-500"></div>
         </a>
       </div>
+
+      <style>{`
+        @keyframes sweep {
+          0% { transform: translateX(-50%) translateY(-50%) rotate(0deg); }
+          50% { transform: translateX(-10%) translateY(-10%) rotate(180deg); }
+          100% { transform: translateX(-50%) translateY(-50%) rotate(360deg); }
+        }
+      `}</style>
 
     </section>
   );

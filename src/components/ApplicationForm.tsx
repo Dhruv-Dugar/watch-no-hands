@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from "react";
+
 
 const ApplicationForm: React.FC = () => {
   const [step, setStep] = useState<number>(1);

@@ -1,7 +1,54 @@
+import React, { useRef } from 'react';
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Environment, PresentationControls, MeshDistortMaterial } from "@react-three/drei";
+import * as THREE from 'three';
+
+const DistortedTimeGraphic = () => {
+  const meshRef = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x = state.clock.getElapsedTime() * 0.2;
+      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.3;
+    }
+  });
+
+  return (
+    <group>
+      <mesh ref={meshRef} position={[0, 0, 0]} castShadow receiveShadow scale={1.5}>
+        <icosahedronGeometry args={[1, 128]} />
+        {/* A fluid, distorted dark material representing the warping of time */}
+        <MeshDistortMaterial
+          color="#0a0a0c"
+          distort={0.4}
+          speed={1.5}
+          metalness={0.9}
+          roughness={0.1}
+          clearcoat={1}
+          clearcoatRoughness={0.1}
+          envMapIntensity={2}
+        />
+      </mesh>
+
+      {/* Surrounding gold dust / stars */}
+      <points>
+        <bufferGeometry>
+          <bufferAttribute
+            attach="attributes-position"
+            count={100}
+            array={new Float32Array(300).map(() => (Math.random() - 0.5) * 10)}
+            itemSize={3}
+          />
+        </bufferGeometry>
+        <pointsMaterial size={0.05} color="#C5A880" transparent opacity={0.5} />
+      </points>
+    </group>
+  );
+};
 
 const Philosophy: React.FC = () => {
   return (
-    <section id="philosophy" className="py-32 md:py-48 bg-brand-void relative overflow-hidden">
+    <section id="philosophy" className="py-32 md:py-48 bg-brand-void relative overflow-hidden border-t border-brand-obsidian">
       <div className="container mx-auto px-6 md:px-12 relative z-10">
 
         {/* Editorial Grid */}
@@ -22,24 +69,29 @@ const Philosophy: React.FC = () => {
           </div>
 
           {/* Right Block - Vibe Image/Graphic */}
-          <div className="md:col-span-4 md:col-start-8 mt-16 md:mt-0 relative group">
-            {/* Abstract visual representing 'Absence' */}
-            <div className="aspect-[3/4] w-full bg-brand-obsidian relative overflow-hidden flex items-center justify-center border border-white/5 group-hover:border-brand-gold/30 transition-colors duration-700">
-              {/* Subtle lighting effect */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-brand-void via-transparent to-brand-void/50 z-10"></div>
+          <div className="md:col-span-4 md:col-start-8 mt-16 md:mt-0 relative group h-[400px] md:h-[600px]">
+            {/* Interactive 3D Graphic */}
+            <div className="absolute inset-0 bg-brand-void border border-white/5 group-hover:border-brand-gold/30 transition-colors duration-700 overflow-hidden">
+              <Canvas shadows dpr={[1, 2]} camera={{ position: [0, 0, 5], fov: 45 }}>
+                <ambientLight intensity={0.1} />
+                <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={2} color="#C5A880" />
 
-              {/* Central minimalist element */}
-              <div className="w-32 h-32 rounded-full border border-brand-steel/20 shadow-[0_0_40px_rgba(197,168,128,0.05)] flex items-center justify-center">
-                 <div className="w-24 h-24 rounded-full border border-brand-steel/10"></div>
-              </div>
+                <PresentationControls
+                  global
+                  config={{ mass: 1, tension: 170, friction: 26 }}
+                  rotation={[0, -0.3, 0]}
+                  polar={[-Math.PI / 4, Math.PI / 4]}
+                  azimuth={[-Math.PI / 4, Math.PI / 4]}
+                >
+                  <DistortedTimeGraphic />
+                </PresentationControls>
 
-              {/* Decorative corner markers */}
-              <div className="absolute top-6 left-6 w-1 h-1 bg-brand-gold/50"></div>
-              <div className="absolute bottom-6 right-6 w-1 h-1 bg-brand-gold/50"></div>
+                <Environment preset="city" />
+              </Canvas>
             </div>
 
-            <div className="absolute -bottom-8 -left-8 md:-left-16 z-20 w-48 md:w-64">
-              <p className="font-serif italic text-xl md:text-2xl text-brand-gold leading-snug">
+            <div className="absolute -bottom-8 -left-8 md:-left-16 z-20 w-48 md:w-64 pointer-events-none">
+              <p className="font-serif italic text-xl md:text-2xl text-brand-gold leading-snug drop-shadow-lg">
                 "You do not set meetings. Meetings form everywhere around you go."
               </p>
             </div>
